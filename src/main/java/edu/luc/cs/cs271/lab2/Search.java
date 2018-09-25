@@ -83,7 +83,8 @@ public class Search {
     if (low >= size) {
       return Optional.of(-1);
     } else {
-      return Optional.of(low);
+     
+      return Optional.empty();
     }
   }
 }
