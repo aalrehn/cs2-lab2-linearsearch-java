@@ -23,9 +23,19 @@ public class Search {
 
   /** Looks for the position of the named team in a list. */
   public static Optional<Integer> findTeamPosition(final List<Team> list, final String key) {
-    // TODO complete this method
-    return Optional.empty();
+    // TODO complete this method done
+     final int size = list.size();
+    for (int i = 0; i < size; i++) {
+      if (list.get(i).getName().equals(key)) {
+        
+        return Optional.of(i);
   }
+
+    
+  }
+  return Optional.empty();
+}  
+
   
   /** 
    * Looks for the position of the poorest team that has at least 
@@ -34,7 +44,13 @@ public class Search {
    * @post arr[result].funding >= minFunding && for all 0 <= i < result : arr[i].funding < minFunding
    */
   public static Optional<Integer> findTeamMinFunding(final Team[] arr, final int minFunding) {
-    // TODO complete this method
+    // TODO complete this method done
+    final int size = arr.length;
+      for (int i = 0; i < size; i++){
+        if (arr[i].getFunding() >= minFunding){
+          return Optional.of(i);
+   }
+   }
     return Optional.empty();
   }
   
@@ -48,19 +64,26 @@ public class Search {
    * @post arr[result].funding >= minFunding && for all 0 <= i < result : arr[i].funding < minFunding
    */
   public static Optional<Integer> findTeamMinFundingFast(final Team[] arr, final int minFunding) {
-    // TODO complete this method
+    // TODO complete this method done
     // Gets the array size
     final int size = arr.length;
-    // Initially consider the entire index range of the array
     int low = 0;
     int high = size - 1;
-    // Keep going as long as there is more than one item to be checked
-    // Eliminate the wrong half of the array
-    // Return current item only if it meets the condition!
-    if (low <= high && arr[low].getFunding() >= minFunding) {
-      return Optional.of(low);
+    // Initially consider the entire index range of the array
+    while (low <= high) {
+      int mid = (low + high) / 2;
+      if (arr[mid].getFunding() < minFunding) {
+        low = mid + 1;
+      } else if (arr[mid].getFunding() > minFunding) {
+        high = mid -1;
+      } else if (arr[mid].getFunding() == minFunding) {
+          return Optional.of(mid);
+      }
+    }
+    if (low >= size) {
+      return Optional.of(-1);
     } else {
-      return Optional.empty();
+      return Optional.of(low);
     }
   }
 }
